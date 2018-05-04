@@ -9,21 +9,20 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     /*
-    Use this to bypass the forced crop that blurs your image.
-
-    How to use:
-    -Any square JPG with a resolution under 2400x2400px and 3.4MB should work.
-    -Rename your JPG to screenshot.jpg and place it here:
-        file:///storage/emulated/0/screenshot.jpg
-    -In ZG, go to upload an image. Tap "Upload Avatar", then "Check Albums".
-    -Look for your screenshot.jpg and choose it.
-    -ZG will now ask you pick a crop app from a list. Choose psc-pristine.
-    -It should auto-close and your jpg is sent to ZG without cropping.
-    -Ta-dah! I hope your profile image is now crystal clear.
-
-    Need:
-    -ask for external_write permission on install
-    */
+     *    Use this to bypass some app forcing a crop request that blurs your image.
+     *
+     *    -Any square JPG with a resolution under 2400x2400px and 3.4MB should work.
+     *    -Rename your JPG to screenshot.jpg and place it here:
+     *       file:///storage/emulated/0/screenshot.jpg
+     *    -Choose this app when android displays the "choose a crop app" list
+     *    -This crop app should auto-close and your jpg is sent to the servers
+     *     without cropping.
+     *    -Ta-dah! The uploaded image is crystal clear.
+     *
+     *    Need:
+     *    -ask for external_write permission on install to access storage/emulated/0/
+     *
+     */
 
     TextView mainText;
 
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = new Bundle();
         Intent intent = new Intent(output);
 
+	//I just took the incoming extras and sent them back
         intent.putExtras(extras);
         intent.putExtra("return-data", false);
         intent.putExtra("outputX", 90);

@@ -30,13 +30,16 @@ public class MainActivity extends AppCompatActivity {
                 "  file:///storage/emulated/0/screenshot.jpg\n\n" +
                 "This is just your top-level internal storage\n" +
                 "where you should also see your Download, DCIM, and Pictures folders.\n" +
-                "Don't put screenshot.jpg inside your Pictures folder!";
+                "Don't put screenshot.jpg inside your Pictures folder!\n" +
+                "This app only works after choosing it from the crop-app list in ZG.";
         mainText.setText(mainDisplayThis);
         String instructionsDisplayThis = "Instructions:\n"+
-                "1. Place screenshot.jpg at the directory mentioned above." +
-                "2. When ZG asks you to choose an image, pick anything. It's ignored." +
-                "3. Next, when asked to choose a cropping app, pick PSc-Pristine." +
-                "4. Press the green check button. Done!";
+                "1. Place screenshot.jpg at the directory mentioned above.\n" +
+                "2. When ZG asks you to choose an image, pick anything.\n" +
+                "   It's ignored.\n" +
+                "3. Next, when asked to choose a cropping app, pick PSc-Pristine.\n" +
+                "4. Press the green check button. Done!" +
+                "   Restart ZG to update your profile image immediately.";
         instructionsText.setText(instructionsDisplayThis);
 
         useButton = findViewById(R.id.useButton);

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -11,20 +13,10 @@ public class MainActivity extends AppCompatActivity {
     /*
      *    Use this to bypass some app forcing a crop request that blurs your image.
      *
-     *    -Any square JPG with a resolution under 2400x2400px and 3.4MB should work.
-     *    -Rename your JPG to screenshot.jpg and place it here:
-     *       file:///storage/emulated/0/screenshot.jpg
-     *    -Choose this app when android displays the "choose a crop app" list
-     *    -This crop app should auto-close and your jpg is sent to the servers
-     *     without cropping.
-     *    -Ta-dah! The uploaded image is crystal clear.
-     *
-     *    Need:
-     *    -ask for external_write permission on install to access storage/emulated/0/
-     *
      */
 
-    TextView mainText;
+    TextView mainText, instructionsText;
+    Button useButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,40 +24,53 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainText = findViewById(R.id.mainText);
-        mainText.setText("Hi.");
+        instructionsText = findViewById(R.id.instructionsText);
+        String mainDisplayThis = "Welcome to PSc-Pristine.\n" +
+                "Place a square JPG named screenshot.jpg here:\n" +
+                "  file:///storage/emulated/0/screenshot.jpg\n\n" +
+                "This is just your top-level internal storage\n" +
+                "where you should also see your Download, DCIM, and Pictures folders.\n" +
+                "Don't put screenshot.jpg inside your Pictures folder!";
+        mainText.setText(mainDisplayThis);
+        String instructionsDisplayThis = "Instructions:\n"+
+                "1. Place screenshot.jpg at the directory mentioned above." +
+                "2. When ZG asks you to choose an image, pick anything. It's ignored." +
+                "3. Next, when asked to choose a cropping app, pick PSc-Pristine." +
+                "4. Press the green check button. Done!";
+        instructionsText.setText(instructionsDisplayThis);
 
-        /*
-        Intent myIntent = getIntent();
+        useButton = findViewById(R.id.useButton);
+        cancelButton = findViewById(R.id.cancelButton);
 
-        Bundle bundle = myIntent.getExtras();
-        if (bundle != null) {
-            for (String key : bundle.keySet()) {
-                Object value = bundle.get(key);
-                String appendThis = "\n\n" + key + "..." +
-                        value.toString() + "..." + value.getClass().getName();
-                mainText.setText(mainText.getText() + appendThis);
+        final String output = "file:///storage/emulated/0/screenshot.jpg";
+        final Uri outputUri = Uri.parse(output);
+
+        final Bundle extras = new Bundle();
+        final Intent intent = new Intent(output);
+
+        useButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                intent.putExtras(extras);
+                intent.putExtra("return-data", false);
+                intent.putExtra("outputX", 90);
+                intent.putExtra("outputY", 90);
+                intent.putExtra("output", outputUri);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("outputFormat", "JPEG");
+                intent.putExtra("crop", true);
+                setResult(RESULT_OK, intent);
+                finish();
             }
-        }
-        */
+        });
 
-        String output = "file:///storage/emulated/0/screenshot.jpg";
-        Uri outputUri = Uri.parse(output);
-
-        Bundle extras = new Bundle();
-        Intent intent = new Intent(output);
-
-	//I just took the incoming extras and sent them back
-        intent.putExtras(extras);
-        intent.putExtra("return-data", false);
-        intent.putExtra("outputX", 90);
-        intent.putExtra("outputY", 90);
-        intent.putExtra("output", outputUri);
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputFormat", "JPEG");
-        intent.putExtra("crop", true);
-
-        setResult(RESULT_OK, intent);
-        finish();
+        cancelButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                setResult(RESULT_CANCELED, intent);
+                finish();
+            }
+        });
     }
 }

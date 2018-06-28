@@ -1,4 +1,4 @@
-package com.example.cyl.psc_pristine;
+package com.csylo.cyl.psc_pristine;
 
 import org.junit.Test;
 

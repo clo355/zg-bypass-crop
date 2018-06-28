@@ -1,4 +1,4 @@
-package com.example.cyl.psc_pristine;
+package com.csylo.cyl.psc_pristine;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("aspectX", 1);
                 intent.putExtra("aspectY", 1);
                 intent.putExtra("outputFormat", "JPEG");
-                intent.putExtra("crop", true);
+                intent.putExtra("crop", true); //the magic variable
                 setResult(RESULT_OK, intent);
                 finish();
             }
